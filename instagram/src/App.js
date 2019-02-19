@@ -17,20 +17,19 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.setState({ ...this.state, posts: dummyData.map(p => ({ ...p, id: shortid.generate() })) });
+    this.setState({
+      ...this.state,
+      posts: dummyData.map(p => ({ ...p, id: shortid.generate() }))
+    });
   }
 
   onLike = id => {
     const { posts } = this.state;
     const foundIndex = posts.findIndex(p => p.id === id);
-    this.setState({
-      ...this.state,
-      posts: [
-        ...posts.slice(0, foundIndex),
-        { ...posts[foundIndex], likes: posts[foundIndex].likes + 1 },
-        ...posts.slice(foundIndex + 1)
-      ]
-    });
+    const newArray = [...this.state.posts];
+    newArray[foundIndex].likes += 1;
+
+    this.setState({ posts: newArray });
   };
 
   render() {
@@ -39,11 +38,7 @@ class App extends Component {
       <div className="App">
         <Header />
         {posts.map((p, i) => (
-          <PostContainer
-            key={i}
-            post={p}
-            onLike={this.onLike}
-          />
+          <PostContainer key={i} post={p} onLike={this.onLike} />
         ))}
       </div>
     );
