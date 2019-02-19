@@ -5,25 +5,27 @@ import './Header.scss';
 
 const Header = () => {
   return (
-    <header className="header">
-      <a href="#" className="logo-left">
-        <Instagram size={24} />
-        <div className="splitter-thing"></div>
-        Instagram
-      </a>
-      <SearchBar />
-      <div className="header-icons">
-        <a href="#">
-          <Compass size={24}/>
+    <div className="header-wrapper">
+      <header className="header">
+        <a href="#" className="logo-left">
+          <Instagram size={24} />
+          <div className="splitter-thing" />
+          Instagram
         </a>
-        <a href="#">
-          <Heart size={24} />
-        </a>
-        <a href="#">
-          <User size={24} />
-        </a>
-      </div>
-    </header>
+        <SearchBar />
+        <div className="header-icons">
+          <a href="#">
+            <Compass size={24} />
+          </a>
+          <a href="#">
+            <Heart size={24} />
+          </a>
+          <a href="#">
+            <User size={24} />
+          </a>
+        </div>
+      </header>
+    </div>
   );
 };
 
