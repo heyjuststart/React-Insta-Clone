@@ -5,10 +5,7 @@ import { Card, CardImg, CardBody } from 'reactstrap';
 import { Heart, MessageCircle } from 'react-feather';
 import './PostContainer.scss';
 
-const PostContainer = ({
-  post,
-  onLike
-}) => {
+const PostContainer = ({ post, onLike, onCommentSubmit }) => {
   return (
     <Card className="post-container">
       <div className="post-title">
@@ -31,7 +28,11 @@ const PostContainer = ({
             <div>{post.comments.length}</div>
           </div>
         </div>
-        <CommentSection comments={post.comments} post={post} />
+        <CommentSection
+          comments={post.comments}
+          post={post}
+          onCommentSubmit={onCommentSubmit}
+        />
       </CardBody>
     </Card>
   );

@@ -46,6 +46,21 @@ class App extends Component {
     changeInputValue(e.target.value);
   };
 
+  onCommentSubmit = (e, id, text) => {
+    e.preventDefault();
+    const { posts, newComment } = this.state;
+    const index = posts.findIndex(p => p.id === id);
+    const newPosts = [...posts];
+    newPosts[index] = {
+      ...posts[index],
+      comments: [...posts[index].comments, { ...newComment, text: text }]
+    };
+
+    this.setState({
+      posts: newPosts
+    });
+  };
+
   render() {
     const { posts, filterTerms } = this.state;
     return (
@@ -57,7 +72,12 @@ class App extends Component {
         <FilterResults items={posts} fuseConfig={fuseConfig}>
           {filteredPosts =>
             filteredPosts.map(post => (
-              <PostContainer key={post.id} post={post} onLike={this.onLike} />
+              <PostContainer
+                key={post.id}
+                post={post}
+                onLike={this.onLike}
+                onCommentSubmit={this.onCommentSubmit}
+              />
             ))
           }
         </FilterResults>

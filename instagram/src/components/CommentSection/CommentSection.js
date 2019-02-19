@@ -31,18 +31,9 @@ class CommentSection extends React.Component {
     });
   };
 
-  onCommentSubmit = e => {
-    e.preventDefault();
-    const { newComment, comments } = this.state;
-    this.setState({
-      ...this.state,
-      comments: [...comments, newComment],
-      newComment: initialState.newComment
-    });
-  };
-
   render() {
     const { newComment, comments, post } = this.state;
+    const { onCommentSubmit } = this.props;
     return (
       <div className="comments">
         {comments.map((c, i) => (
@@ -54,7 +45,14 @@ class CommentSection extends React.Component {
         <form
           action="#"
           className="search-form"
-          onSubmit={this.onCommentSubmit}
+          onSubmit={e => {
+            onCommentSubmit(e, post.id, newComment.text);
+            this.setState({
+              ...this.state,
+              comments: [...comments, newComment],
+              newComment: initialState.newComment
+            });
+          }}
         >
           <input
             type="text"
