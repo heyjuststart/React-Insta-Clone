@@ -6,7 +6,7 @@ import fuzzyFilterFactory from 'react-fuzzy-filter';
 import Header from './components/Header/Header';
 import PostContainer from './components/PostContainer/PostContainer';
 
-const { InputFilter, FilterResults, changeInputValue } = fuzzyFilterFactory();
+const { FilterResults, changeInputValue } = fuzzyFilterFactory();
 
 const fuseConfig = {
   keys: ['username', 'comments.text', 'comments.username']
@@ -48,9 +48,6 @@ class App extends Component {
 
   render() {
     const { posts, filterTerms } = this.state;
-    // const filteredPosts = posts.filter(
-    //   p => p.username.indexOf(filterTerms) > -1
-    // );
     return (
       <div className="App">
         <Header
@@ -59,8 +56,8 @@ class App extends Component {
         />
         <FilterResults items={posts} fuseConfig={fuseConfig}>
           {filteredPosts =>
-            filteredPosts.map((post, i) => (
-              <PostContainer key={i} post={post} onLike={this.onLike} />
+            filteredPosts.map(post => (
+              <PostContainer key={post.id} post={post} onLike={this.onLike} />
             ))
           }
         </FilterResults>
@@ -70,6 +67,3 @@ class App extends Component {
 }
 
 export default App;
-// {filteredPosts.map((p, i) => (
-//   <PostContainer key={i} post={p} onLike={this.onLike} />
-// ))}
