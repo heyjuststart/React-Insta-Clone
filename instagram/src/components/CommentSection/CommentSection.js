@@ -17,7 +17,7 @@ class CommentSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: this.props.comments,
+      comments: props.comments,
       post: this.props.post,
       newComment: initialState.newComment
     };

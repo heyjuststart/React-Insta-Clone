@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import shortid from 'shortid';
 import './App.css';
 import dummyData from './dummy-data';
+import fuzzyFilterFactory from 'react-fuzzy-filter';
 import Header from './components/Header/Header';
 import PostContainer from './components/PostContainer/PostContainer';
+
+const { InputFilter, FilterResults, changeInputValue } = fuzzyFilterFactory();
+
+const fuseConfig = {
+  keys: ['username', 'comments.text', 'comments.username']
+};
 
 const initialState = {
   posts: [],
@@ -15,7 +22,7 @@ class App extends Component {
 
   state = {
     ...initialState,
-    posts: dummyData.map(p => ({ ...p, id: shortid.generate() })),
+    posts: dummyData.map(p => ({ ...p, id: shortid.generate() }))
   };
 
   componentDidMount() {
@@ -36,20 +43,33 @@ class App extends Component {
 
   onSearchChange = e => {
     this.setState({ filterTerms: e.target.value });
-  }
+    changeInputValue(e.target.value);
+  };
 
   render() {
     const { posts, filterTerms } = this.state;
-    const filteredPosts = posts.filter(p => p.username.indexOf(filterTerms) > -1);
+    // const filteredPosts = posts.filter(
+    //   p => p.username.indexOf(filterTerms) > -1
+    // );
     return (
       <div className="App">
-        <Header onSearchChange={this.onSearchChange} filterTerms={filterTerms} />
-        {filteredPosts.map((p, i) => (
-          <PostContainer key={i} post={p} onLike={this.onLike} />
-        ))}
+        <Header
+          onSearchChange={this.onSearchChange}
+          filterTerms={filterTerms}
+        />
+        <FilterResults items={posts} fuseConfig={fuseConfig}>
+          {filteredPosts =>
+            filteredPosts.map((post, i) => (
+              <PostContainer key={i} post={post} onLike={this.onLike} />
+            ))
+          }
+        </FilterResults>
       </div>
     );
   }
 }
 
 export default App;
+// {filteredPosts.map((p, i) => (
+//   <PostContainer key={i} post={p} onLike={this.onLike} />
+// ))}

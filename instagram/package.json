@@ -10,6 +10,7 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-feather": "^1.1.6",
+    "react-fuzzy-filter": "^4.2.1",
     "react-scripts": "2.1.5",
     "reactstrap": "^7.1.0",
     "shortid": "^2.2.14"
