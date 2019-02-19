@@ -14,13 +14,13 @@ const Header = () => {
       <SearchBar />
       <div className="header-icons">
         <a href="#">
-          <Compass />
+          <Compass size={24}/>
         </a>
         <a href="#">
-          <Heart />
+          <Heart size={24} />
         </a>
         <a href="#">
-          <User />
+          <User size={24} />
         </a>
       </div>
     </header>

@@ -51,4 +51,18 @@
     justify-content: flex-end;
     width: auto;
   }
+
+  .header-icons {
+    a {
+      color: #717171;
+
+      &:not(:last-child) {
+        margin: 0 20px;
+      }
+
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
+  }
 }
