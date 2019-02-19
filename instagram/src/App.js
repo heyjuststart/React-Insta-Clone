@@ -6,20 +6,19 @@ import Header from './components/Header/Header';
 import PostContainer from './components/PostContainer/PostContainer';
 
 const initialState = {
-  posts: [],
-  newComment: {
-    username: 'testUser',
-    comment: ''
-  }
+  posts: []
 };
 
 class App extends Component {
   static defaultProps = initialState;
 
   state = {
-    posts: dummyData.map(p => ({ ...p, id: shortid.generate() })),
-    newComment: initialState.newComment
+    posts: dummyData.map(p => ({ ...p, id: shortid.generate() }))
   };
+
+  componentDidMount() {
+    this.setState({ ...this.state, posts: dummyData.map(p => ({ ...p, id: shortid.generate() })) });
+  }
 
   onLike = id => {
     const { posts } = this.state;
@@ -34,16 +33,8 @@ class App extends Component {
     });
   };
 
-  onCommentChange = e => {
-    const { newComment } = this.state;
-    this.setState({
-      ...this.state,
-      newComment: { ...newComment, comment: e.target.value }
-    });
-  };
-
   render() {
-    const { posts, newComment } = this.state;
+    const { posts } = this.state;
     return (
       <div className="App">
         <Header />
@@ -51,9 +42,7 @@ class App extends Component {
           <PostContainer
             key={i}
             post={p}
-            newComment={newComment}
             onLike={this.onLike}
-            onCommentChange={this.onCommentChange}
           />
         ))}
       </div>
