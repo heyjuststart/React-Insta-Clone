@@ -6,7 +6,7 @@ import { Heart, MessageCircle } from 'react-feather';
 import moment from 'moment';
 import './PostContainer.scss';
 
-const PostContainer = ({ post, newComment }) => {
+const PostContainer = ({ post, newComment, onLike, onCommentChange }) => {
   return (
     <Card className="post-container">
       <div className="post-title">
@@ -21,17 +21,25 @@ const PostContainer = ({ post, newComment }) => {
       <CardBody className="post-body">
         <div className="post-icons">
           <div className="icon-container">
-            <Heart/>
-            <div>{ post.likes }</div>
+            <Heart className="like-button" onClick={() => onLike(post.id)} />
+            <div>{post.likes}</div>
           </div>
           <div className="icon-container">
             <MessageCircle />
-            <div>{ post.comments.length }</div>
+            <div>{post.comments.length}</div>
           </div>
         </div>
         <CommentSection comments={post.comments} />
-        <div className="timestamp">{moment(post.timestamp, 'MMMM Do YYYY, hh:mm:ss a').fromNow()}</div>
-        <input type="text" placeholder="Add a comment..." className="add-comment" />
+        <div className="timestamp">
+          {moment(post.timestamp, 'MMMM Do YYYY, hh:mm:ss a').fromNow()}
+        </div>
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          className="add-comment"
+          value={newComment.comment}
+          onChange={onCommentChange}
+        />
       </CardBody>
     </Card>
   );

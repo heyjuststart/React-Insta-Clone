@@ -41,7 +41,7 @@
 
   .add-comment {
     margin-top: 10px;
-    padding-top: 10px;
+    padding: 10px 0;
     border-top: 1px solid lightgrey;
     width: 100%;
     border-left: 0px;
@@ -52,5 +52,10 @@
   .timestamp {
     color: #717171;
     font-size: 1.4rem;
+  }
+
+  .like-button {
+    cursor: pointer;
+    user-select: none;
   }
 }
