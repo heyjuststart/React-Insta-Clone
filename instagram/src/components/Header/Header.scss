@@ -1,12 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Oleo+Script');
+
 .header {
   align-self: stretch;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0,0,0,0.0975);
 
-  .header-icons {
+  @media (min-width: 500px) {
+    width: 100%;
+    max-width: 1000px;
+    align-self: center;
+    padding: 26px;
+  }
+
+  .logo-left {
+    flex: 1 9999 0%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    font-size: 3rem;
+    font-family: 'Oleo Script', cursive;
+    color: black;
+    text-decoration: none;
+
+    .splitter-thing {
+      width: 1px;
+      background-color: black;
+      height: 28px;
+      margin: 0 16px;
+    }
+  }
+
+  .search-bar {
+    flex: 0 1 auto;
+    width: 215px;
+    background-color: #fafafa;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    font-size: 1.4rem;
+    height: 28px;
+    padding: 3px;
+  }
+
+  .header-icons {
+    flex: 1 0 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     width: auto;
   }
 }

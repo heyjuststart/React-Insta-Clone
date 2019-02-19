@@ -30,7 +30,7 @@ const PostContainer = ({ post, newComment }) => {
           </div>
         </div>
         <CommentSection comments={post.comments} />
-        <div className="timestamp">{post.timestamp}</div>
+        <div className="timestamp">{moment().fromNow(post.timestamp)}</div>
         <input type="text" placeholder="Add a comment..." className="add-comment" />
       </CardBody>
     </Card>
