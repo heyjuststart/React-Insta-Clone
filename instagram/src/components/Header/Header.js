@@ -3,7 +3,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import { Instagram, Compass, Heart, User } from 'react-feather';
 import './Header.scss';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div className="header-wrapper">
       <header className="header">
@@ -12,7 +12,7 @@ const Header = () => {
           <div className="splitter-thing" />
           Instagram
         </a>
-        <SearchBar />
+        <SearchBar filterTerms={props.filterTerms} onSearchChange={props.onSearchChange}/>
         <div className="header-icons">
           <a href="#">
             <Compass size={24} />

@@ -6,14 +6,16 @@ import Header from './components/Header/Header';
 import PostContainer from './components/PostContainer/PostContainer';
 
 const initialState = {
-  posts: []
+  posts: [],
+  filterTerms: ''
 };
 
 class App extends Component {
   static defaultProps = initialState;
 
   state = {
-    posts: dummyData.map(p => ({ ...p, id: shortid.generate() }))
+    ...initialState,
+    posts: dummyData.map(p => ({ ...p, id: shortid.generate() })),
   };
 
   componentDidMount() {
@@ -32,12 +34,17 @@ class App extends Component {
     this.setState({ posts: newArray });
   };
 
+  onSearchChange = e => {
+    this.setState({ filterTerms: e.target.value });
+  }
+
   render() {
-    const { posts } = this.state;
+    const { posts, filterTerms } = this.state;
+    const filteredPosts = posts.filter(p => p.username.indexOf(filterTerms) > -1);
     return (
       <div className="App">
-        <Header />
-        {posts.map((p, i) => (
+        <Header onSearchChange={this.onSearchChange} filterTerms={filterTerms} />
+        {filteredPosts.map((p, i) => (
           <PostContainer key={i} post={p} onLike={this.onLike} />
         ))}
       </div>
