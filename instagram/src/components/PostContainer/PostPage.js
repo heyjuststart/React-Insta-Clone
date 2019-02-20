@@ -16,11 +16,6 @@ const initialState = {
   filterTerms: ''
 };
 
-const newComment = {
-  username: 'testUser',
-  text: ''
-};
-
 class PostPage extends Component {
   static defaultProps = initialState;
 
@@ -50,14 +45,14 @@ class PostPage extends Component {
     changeInputValue(e.target.value);
   };
 
-  onCommentSubmit = (e, id, text) => {
+  onCommentSubmit = (e, id, newComment) => {
     e.preventDefault();
     const { posts } = this.state;
     const index = posts.findIndex(p => p.id === id);
     const newPosts = [...posts];
     newPosts[index] = {
       ...posts[index],
-      comments: [...posts[index].comments, { ...newComment, text: text }]
+      comments: [...posts[index].comments, newComment]
     };
 
     this.setState({
@@ -67,11 +62,13 @@ class PostPage extends Component {
 
   render() {
     const { posts, filterTerms } = this.state;
+    const { logout } = this.props;
     return (
       <>
         <Header
           onSearchChange={this.onSearchChange}
           filterTerms={filterTerms}
+          logout={logout}
         />
         <FilterResults items={posts} fuseConfig={fuseConfig}>
           {filteredPosts =>

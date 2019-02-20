@@ -1,9 +1,8 @@
 import React from 'react';
 
 export default LoginComponent => LoggedinComponent => props => {
-  if(localStorage.getItem('username')) {
+  if (props.loggedIn === true) {
     return <LoggedinComponent {...props} />;
   }
-
   return <LoginComponent {...props} />;
 };

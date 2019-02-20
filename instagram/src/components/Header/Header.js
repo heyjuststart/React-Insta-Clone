@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from '../SearchBar/SearchBar';
-import { Instagram, Compass, Heart, User } from 'react-feather';
+import { Instagram, Compass, Heart, LogOut } from 'react-feather';
 import './Header.scss';
 
 const Header = (props) => {
@@ -20,8 +20,8 @@ const Header = (props) => {
           <a href="#">
             <Heart size={24} />
           </a>
-          <a href="#">
-            <User size={24} />
+          <a href="#" onClick={props.logout}>
+            <LogOut size={24} />
           </a>
         </div>
       </header>

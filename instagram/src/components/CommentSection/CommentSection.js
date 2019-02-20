@@ -23,6 +23,13 @@ class CommentSection extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const username = localStorage.getItem('username');
+    if (username) {
+      this.setState({ newComment: { ...initialState.newComment, username } });
+    }
+  }
+
   onCommentChange = e => {
     const { newComment } = this.state;
     this.setState({
@@ -46,11 +53,11 @@ class CommentSection extends React.Component {
           action="#"
           className="search-form"
           onSubmit={e => {
-            onCommentSubmit(e, post.id, newComment.text);
+            onCommentSubmit(e, post.id, newComment);
             this.setState({
               ...this.state,
               comments: [...comments, newComment],
-              newComment: initialState.newComment
+              newComment: { ...newComment, text: '' }
             });
           }}
         >
