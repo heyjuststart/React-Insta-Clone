@@ -14,7 +14,9 @@ const fuseConfig = {
 
 const initialState = {
   posts: dummyData.map(p => ({ ...p, id: shortid.generate() })),
-  filterTerms: ''
+  filterTerms: '',
+  loggedIn: false,
+  username: ''
 };
 
 const likePost = (posts, id) => {
@@ -37,6 +39,10 @@ const reducer = (state, action) => {
     return { ...state, filterTerms: action.payload };
   case 'like-post':
     return { ...state, posts: likePost(state.posts, action.payload) };
+  case 'logged-in':
+    return { ...state, username: action.payload, loggedIn: true };
+  case 'logged-out':
+    return { ...state, username: '', loggedIn: false };
   case 'add-comment':
     return {
       ...state,
