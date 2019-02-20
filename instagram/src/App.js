@@ -34,7 +34,8 @@ const addComment = (posts, id, text) => {
 const reducer = (state, action) => {
   switch (action.type) {
   case 'filter-change':
-    changeInputValue(action.payload);
+    // had to make this a setTimeout to avoid setting state within a render
+    setTimeout(() => changeInputValue(action.payload));
     return { ...state, filterTerms: action.payload };
   case 'like-post':
     return { ...state, posts: likePost(state.posts, action.payload) };
