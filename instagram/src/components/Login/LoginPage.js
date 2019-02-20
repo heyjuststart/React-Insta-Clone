@@ -18,8 +18,9 @@ class LoginPage extends React.Component {
 
   login = e => {
     e.preventDefault();
-    localStorage.setItem('username', e.target.value);
+    localStorage.setItem('username', this.state.loginText);
     this.setState({ loginText: '' });
+    window.location.reload();
   };
 
   render() {
@@ -37,6 +38,7 @@ class LoginPage extends React.Component {
                   name="username"
                   onChange={this.onUsernameChange}
                   value={this.state.loginText}
+                  autoComplete="off"
                 />
               </FormGroup>
               <FormGroup>
