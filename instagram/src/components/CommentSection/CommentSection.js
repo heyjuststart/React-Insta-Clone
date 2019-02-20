@@ -1,71 +1,40 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Comment from './Comment';
 import PropTypes from 'prop-types';
 import './CommentSection.scss';
 import moment from 'moment';
+import { PostContext } from '../../App';
 
-const initialState = {
-  comments: [],
-  post: null,
-  newComment: {
-    username: 'testUser',
-    text: ''
-  }
-};
+const CommentSection = ({ comments, post }) => {
+  const [text, setText] = useState('');
+  const { dispatch } = useContext(PostContext);
 
-class CommentSection extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      comments: props.comments,
-      post: this.props.post,
-      newComment: initialState.newComment
-    };
+  function addComment(e) {
+    e.preventDefault();
+    dispatch({ type: 'add-comment', payload: { id: post.id, text } });
+    setText('');
   }
 
-  onCommentChange = e => {
-    const { newComment } = this.state;
-    this.setState({
-      ...this.state,
-      newComment: { ...newComment, text: e.target.value }
-    });
-  };
-
-  render() {
-    const { newComment, comments, post } = this.state;
-    const { onCommentSubmit } = this.props;
-    return (
-      <div className="comments">
-        {comments.map((c, i) => (
-          <Comment {...c} key={i} />
-        ))}
-        <div className="timestamp">
-          {moment(post.timestamp, 'MMMM Do YYYY, hh:mm:ss a').fromNow()}
-        </div>
-        <form
-          action="#"
-          className="search-form"
-          onSubmit={e => {
-            onCommentSubmit(e, post.id, newComment.text);
-            this.setState({
-              ...this.state,
-              comments: [...comments, newComment],
-              newComment: initialState.newComment
-            });
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Add a comment..."
-            className="add-comment"
-            value={newComment.text}
-            onChange={this.onCommentChange}
-          />
-        </form>
+  return (
+    <div className="comments">
+      {comments.map((c, i) => (
+        <Comment {...c} key={i} />
+      ))}
+      <div className="timestamp">
+        {moment(post.timestamp, 'MMMM Do YYYY, hh:mm:ss a').fromNow()}
       </div>
-    );
-  }
-}
+      <form action="#" className="search-form" onSubmit={addComment}>
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          className="add-comment"
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+      </form>
+    </div>
+  );
+};
 
 CommentSection.propTypes = {
   comments: PropTypes.array

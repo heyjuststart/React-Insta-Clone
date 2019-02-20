@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CommentSection from '../CommentSection/CommentSection';
 import PropTypes from 'prop-types';
 import { Card, CardImg, CardBody } from 'reactstrap';
 import { Heart, MessageCircle } from 'react-feather';
+import { PostContext } from '../../App';
 import './PostContainer.scss';
 
-const PostContainer = ({ post, onLike, onCommentSubmit }) => {
+const PostContainer = ({ post }) => {
+  const { dispatch } = useContext(PostContext);
   return (
     <Card className="post-container">
       <div className="post-title">
@@ -20,7 +22,10 @@ const PostContainer = ({ post, onLike, onCommentSubmit }) => {
       <CardBody className="post-body">
         <div className="post-icons">
           <div className="icon-container">
-            <Heart className="like-button" onClick={() => onLike(post.id)} />
+            <Heart
+              className="like-button"
+              onClick={() => dispatch({ type: 'like-post', payload: post.id })}
+            />
             <div>{post.likes}</div>
           </div>
           <div className="icon-container">
@@ -28,11 +33,7 @@ const PostContainer = ({ post, onLike, onCommentSubmit }) => {
             <div>{post.comments.length}</div>
           </div>
         </div>
-        <CommentSection
-          comments={post.comments}
-          post={post}
-          onCommentSubmit={onCommentSubmit}
-        />
+        <CommentSection comments={post.comments} post={post} />
       </CardBody>
     </Card>
   );

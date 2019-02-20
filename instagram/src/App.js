@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useReducer } from 'react';
 import shortid from 'shortid';
 import './App.css';
 import dummyData from './dummy-data';
@@ -13,82 +13,64 @@ const fuseConfig = {
 };
 
 const initialState = {
-  posts: [],
+  posts: dummyData.map(p => ({ ...p, id: shortid.generate() })),
   filterTerms: ''
 };
 
-const newComment = {
-  username: 'testUser',
-  text: ''
+const likePost = (posts, id) => {
+  const newPosts = [...posts];
+  const index = newPosts.findIndex(p => p.id === id);
+  newPosts[index].likes += 1;
+  return newPosts;
 };
 
-class App extends Component {
-  static defaultProps = initialState;
+const addComment = (posts, id, text) => {
+  const newPosts = [...posts];
+  const index = newPosts.findIndex(p => p.id === id);
+  newPosts[index].comments.push({ username: 'testUser', text });
+  return newPosts;
+};
 
-  state = {
-    ...initialState,
-    posts: dummyData.map(p => ({ ...p, id: shortid.generate() }))
-  };
-
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      posts: dummyData.map(p => ({ ...p, id: shortid.generate() }))
-    });
-  }
-
-  onLike = id => {
-    const { posts } = this.state;
-    const foundIndex = posts.findIndex(p => p.id === id);
-    const newArray = [...this.state.posts];
-    newArray[foundIndex].likes += 1;
-
-    this.setState({ posts: newArray });
-  };
-
-  onSearchChange = e => {
-    this.setState({ filterTerms: e.target.value });
-    changeInputValue(e.target.value);
-  };
-
-  onCommentSubmit = (e, id, text) => {
-    e.preventDefault();
-    const { posts } = this.state;
-    const index = posts.findIndex(p => p.id === id);
-    const newPosts = [...posts];
-    newPosts[index] = {
-      ...posts[index],
-      comments: [...posts[index].comments, { ...newComment, text: text }]
+const reducer = (state, action) => {
+  switch (action.type) {
+  case 'filter-change':
+    changeInputValue(action.payload);
+    return { ...state, filterTerms: action.payload };
+  case 'like-post':
+    return { ...state, posts: likePost(state.posts, action.payload) };
+  case 'add-comment':
+    return {
+      ...state,
+      posts: addComment(
+        state.posts,
+        action.payload.id,
+        action.payload.text
+      )
     };
+  default:
+    throw new Error();
+  }
+};
 
-    this.setState({
-      posts: newPosts
-    });
-  };
+const PostContext = React.createContext();
 
-  render() {
-    const { posts, filterTerms } = this.state;
-    return (
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <PostContext.Provider value={{ state, dispatch }}>
       <div className="App">
-        <Header
-          onSearchChange={this.onSearchChange}
-          filterTerms={filterTerms}
-        />
-        <FilterResults items={posts} fuseConfig={fuseConfig}>
+        <Header />
+        <FilterResults items={state.posts} fuseConfig={fuseConfig}>
           {filteredPosts =>
             filteredPosts.map(post => (
-              <PostContainer
-                key={post.id}
-                post={post}
-                onLike={this.onLike}
-                onCommentSubmit={this.onCommentSubmit}
-              />
+              <PostContainer key={post.id} post={post} />
             ))
           }
         </FilterResults>
       </div>
-    );
-  }
-}
+    </PostContext.Provider>
+  );
+};
 
+export { PostContext };
 export default App;
