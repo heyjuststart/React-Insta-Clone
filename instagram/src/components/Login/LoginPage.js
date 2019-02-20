@@ -12,14 +12,17 @@ import {
 import './Login.scss';
 
 class LoginPage extends React.Component {
-  state = { loginText: '' };
+  state = {
+    username: '',
+    password: ''
+  };
 
-  onUsernameChange = e => this.setState({ loginText: e.target.value });
+  onInputChange = e => this.setState({ [e.target.name]: e.target.value });
 
   login = e => {
     e.preventDefault();
-    localStorage.setItem('username', this.state.loginText);
-    this.setState({ loginText: '' });
+    localStorage.setItem('username', this.state.username);
+    this.setState({ username: '', password: '' });
     window.location.reload();
   };
 
@@ -36,14 +39,14 @@ class LoginPage extends React.Component {
                   id="username"
                   type="text"
                   name="username"
-                  onChange={this.onUsernameChange}
-                  value={this.state.loginText}
+                  onChange={this.onInputChange}
+                  value={this.state.username}
                   autoComplete="off"
                 />
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
-                <Input id="password" type="password" name="password" />
+                <Input id="password" type="password" name="password" onChange={this.onInputChange} value={this.state.password}/>
               </FormGroup>
               <Button>Submit</Button>
             </Form>
