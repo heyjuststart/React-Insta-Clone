@@ -17,6 +17,11 @@ const initialState = {
   filterTerms: ''
 };
 
+const newComment = {
+  username: 'testUser',
+  text: ''
+};
+
 class App extends Component {
   static defaultProps = initialState;
 
@@ -48,7 +53,7 @@ class App extends Component {
 
   onCommentSubmit = (e, id, text) => {
     e.preventDefault();
-    const { posts, newComment } = this.state;
+    const { posts } = this.state;
     const index = posts.findIndex(p => p.id === id);
     const newPosts = [...posts];
     newPosts[index] = {
