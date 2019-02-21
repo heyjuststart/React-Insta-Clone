@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import PostPage from './components/PostContainer/PostPage';
 import LoginPage from './components/Login/LoginPage';
 import withAuthenticate from './authentication/withAuthenticate';
-import { createGlobalStyle } from 'styled-components';
-import './App.css';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Oleo+Script');
+`;
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ComponentFromWithAuthenticate = withAuthenticate(LoginPage)(PostPage);
@@ -28,14 +33,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <AppContainer>
         <GlobalStyles />
         <ComponentFromWithAuthenticate
           logout={this.logout}
           loggedIn={this.state.loggedIn}
           onLoggedIn={this.onLoggedIn}
         />
-      </div>
+      </AppContainer>
     );
   }
 }
