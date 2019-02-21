@@ -34,6 +34,7 @@ class App extends Component {
   render() {
     return (
       <AppContainer>
+        { this.props.children }
         <GlobalStyles />
         <ComponentFromWithAuthenticate
           logout={this.logout}
@@ -45,5 +46,4 @@ class App extends Component {
   }
 }
 
-// {/* <PostPage /> */}
 export default App;
