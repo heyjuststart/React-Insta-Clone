@@ -9,7 +9,43 @@ import {
   Input,
   Button
 } from 'reactstrap';
-import './Login.scss';
+import styled from 'styled-components';
+// import './Login.scss';
+
+const LoginContainer = styled.div`
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .login-card {
+    margin: 10px 0;
+    font-size: 2.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .card-title {
+      font-size: 3.5rem;
+      text-align: center;
+      background-color: black;
+      color: white;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      font-size: 2.5rem;
+    }
+
+    button {
+      font-size: 2.5rem;
+    }
+  }
+`;
 
 class LoginPage extends React.Component {
   state = {
@@ -21,7 +57,7 @@ class LoginPage extends React.Component {
   componentDidMount() {
     if (localStorage.getItem('loggedIn') === 'true') {
       this.setState({ loggedIn: !this.state.loggedIn });
-      this.props.onLoggedIn({ ...this.state, loggedIn: true});
+      this.props.onLoggedIn({ ...this.state, loggedIn: true });
     } else {
       localStorage.clear();
       this.props.logout();
@@ -38,12 +74,11 @@ class LoginPage extends React.Component {
     localStorage.setItem('username', this.state.username);
     localStorage.setItem('loggedIn', true);
     this.props.onLoggedIn(newState);
-    // window.location.reload();
   };
 
   render() {
     return (
-      <div className="login-container">
+      <LoginContainer>
         <Card className="login-card">
           <CardBody className="login-body">
             <CardTitle>Login</CardTitle>
@@ -73,7 +108,7 @@ class LoginPage extends React.Component {
             </Form>
           </CardBody>
         </Card>
-      </div>
+      </LoginContainer>
     );
   }
 }

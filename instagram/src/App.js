@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PostPage from './components/PostContainer/PostPage';
 import LoginPage from './components/Login/LoginPage';
 import withAuthenticate from './authentication/withAuthenticate';
-import './App.css';
 import { createGlobalStyle } from 'styled-components';
+import './App.css';
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Oleo+Script');
