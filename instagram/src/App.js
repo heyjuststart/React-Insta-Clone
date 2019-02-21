@@ -5,6 +5,7 @@ import dummyData from './dummy-data';
 import fuzzyFilterFactory from 'react-fuzzy-filter';
 import Header from './components/Header/Header';
 import PostContainer from './components/PostContainer/PostContainer';
+import LoginPage from './components/Login/LoginPage';
 
 const { FilterResults, changeInputValue } = fuzzyFilterFactory();
 
@@ -26,10 +27,10 @@ const likePost = (posts, id) => {
   return newPosts;
 };
 
-const addComment = (posts, id, text) => {
+const addComment = (posts, id, text, username) => {
   const newPosts = [...posts];
   const index = newPosts.findIndex(p => p.id === id);
-  newPosts[index].comments.push({ username: 'testUser', text });
+  newPosts[index].comments.push({ username, text });
   return newPosts;
 };
 
@@ -49,7 +50,8 @@ const reducer = (state, action) => {
       posts: addComment(
         state.posts,
         action.payload.id,
-        action.payload.text
+        action.payload.text,
+        action.payload.username
       )
     };
   default:
@@ -61,17 +63,27 @@ const PostContext = React.createContext();
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  if (state.loggedIn) {
+    return (
+      <PostContext.Provider value={{ state, dispatch }}>
+        <div className="App">
+          <Header />
+          <FilterResults items={state.posts} fuseConfig={fuseConfig}>
+            {filteredPosts =>
+              filteredPosts.map(post => (
+                <PostContainer key={post.id} post={post} />
+              ))
+            }
+          </FilterResults>
+        </div>
+      </PostContext.Provider>
+    );
+  }
+
   return (
     <PostContext.Provider value={{ state, dispatch }}>
       <div className="App">
-        <Header />
-        <FilterResults items={state.posts} fuseConfig={fuseConfig}>
-          {filteredPosts =>
-            filteredPosts.map(post => (
-              <PostContainer key={post.id} post={post} />
-            ))
-          }
-        </FilterResults>
+        <LoginPage />
       </div>
     </PostContext.Provider>
   );

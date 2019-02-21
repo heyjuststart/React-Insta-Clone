@@ -7,11 +7,11 @@ import { PostContext } from '../../App';
 
 const CommentSection = ({ comments, post }) => {
   const [text, setText] = useState('');
-  const { dispatch } = useContext(PostContext);
+  const { state, dispatch } = useContext(PostContext);
 
   function addComment(e) {
     e.preventDefault();
-    dispatch({ type: 'add-comment', payload: { id: post.id, text } });
+    dispatch({ type: 'add-comment', payload: { id: post.id, text, username: state.username } });
     setText('');
   }
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
-import { Instagram, Compass, Heart, User } from 'react-feather';
+import { Instagram, Compass, Heart, LogOut } from 'react-feather';
+import { PostContext } from '../../App';
 import './Header.scss';
 
 const Header = () => {
+  const { dispatch } = useContext(PostContext);
   return (
     <div className="header-wrapper">
       <header className="header">
@@ -20,8 +22,12 @@ const Header = () => {
           <a href="#">
             <Heart size={24} />
           </a>
-          <a href="#">
-            <User size={24} />
+          <a href="#" onClick={e => {
+            e.preventDefault();
+            localStorage.clear();
+            dispatch({ type: 'logged-out' });
+          }}>
+            <LogOut size={24} />
           </a>
         </div>
       </header>
