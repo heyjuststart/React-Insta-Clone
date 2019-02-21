@@ -10,40 +10,43 @@ import {
   Button
 } from 'reactstrap';
 import styled from 'styled-components';
-// import './Login.scss';
 
 const LoginContainer = styled.div`
   height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+`;
 
-  .login-card {
-    margin: 10px 0;
+const LoginCard = styled(Card)`
+  margin: 10px 0;
+  font-size: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const LoginCardTitle = styled(CardTitle)`
+  font-size: 3.5rem;
+  text-align: center;
+  background-color: black;
+  color: white;
+`;
+
+const LoginForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const LoginInput = styled(Input)`
+  &.form-control {
     font-size: 2.5rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  }
+`;
 
-    .card-title {
-      font-size: 3.5rem;
-      text-align: center;
-      background-color: black;
-      color: white;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    input {
-      font-size: 2.5rem;
-    }
-
-    button {
-      font-size: 2.5rem;
-    }
+const LoginButton = styled(Button)`
+  &.btn-secondary {
+    font-size: 2.5rem;
   }
 `;
 
@@ -79,13 +82,13 @@ class LoginPage extends React.Component {
   render() {
     return (
       <LoginContainer>
-        <Card className="login-card">
+        <LoginCard>
           <CardBody className="login-body">
-            <CardTitle>Login</CardTitle>
-            <Form className="login-form" onSubmit={this.login}>
+            <LoginCardTitle>Login</LoginCardTitle>
+            <LoginForm className="login-form" onSubmit={this.login}>
               <FormGroup>
                 <Label for="username">Username</Label>
-                <Input
+                <LoginInput
                   id="username"
                   type="text"
                   name="username"
@@ -96,7 +99,7 @@ class LoginPage extends React.Component {
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
-                <Input
+                <LoginInput
                   id="password"
                   type="password"
                   name="password"
@@ -104,10 +107,10 @@ class LoginPage extends React.Component {
                   value={this.state.password}
                 />
               </FormGroup>
-              <Button>Submit</Button>
-            </Form>
+              <LoginButton>Submit</LoginButton>
+            </LoginForm>
           </CardBody>
-        </Card>
+        </LoginCard>
       </LoginContainer>
     );
   }

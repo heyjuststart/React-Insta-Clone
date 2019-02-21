@@ -1,7 +1,23 @@
 import React from 'react';
-import Comment from './Comment';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import styled from 'styled-components';
+import Comment from './Comment';
+
+const CommentInput = styled.input`
+  margin-top: 10px;
+  padding: 10px 0;
+  border-top: 1px solid lightgrey;
+  width: 100%;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+`;
+
+const TimeStamp = styled.div`
+  color: #717171;
+  font-size: 1.4rem;
+`;
 
 const initialState = {
   comments: [],
@@ -45,9 +61,9 @@ class CommentSection extends React.Component {
         {comments.map((c, i) => (
           <Comment {...c} key={i} />
         ))}
-        <div className="timestamp">
+        <TimeStamp>
           {moment(post.timestamp, 'MMMM Do YYYY, hh:mm:ss a').fromNow()}
-        </div>
+        </TimeStamp>
         <form
           action="#"
           className="search-form"
@@ -60,7 +76,7 @@ class CommentSection extends React.Component {
             });
           }}
         >
-          <input
+          <CommentInput
             type="text"
             placeholder="Add a comment..."
             className="add-comment"
